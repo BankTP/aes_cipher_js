@@ -32,9 +32,16 @@
             <div class="card-body">
 
                 <div>
-                    <label class="form-label">SECRET</label>
+                    <div class="form-label">
+                        <div class="row">
+                            <div class="col">SECRET</div>
+                            <div class="col-auto text-white-50" style="cursor: pointer;">
+                                <div @click="saveSecret">save</div>
+                            </div>
+                        </div>
+                    </div>
                     <div>
-                        <input type="text" v-model="secret" class="form-control" />
+                        <input type="password" v-model="secret" class="form-control" />
                     </div>
                 </div>
                 <template v-if="secret">
@@ -70,7 +77,7 @@
             el: "#app",
             data: function () {
                 return {
-                    secret: '',
+                    secret: localStorage.getItem('aes-secret'),
                     plain: '',
                     cipher: ''
                 }
@@ -94,6 +101,9 @@
                 cipherChange() {
                     this.plain = decrypt(this.processedSecret, this.cipher)
                 },
+                saveSecret() {
+                    localStorage.setItem('aes-secret', this.secret)
+                }
             }
         })
 
